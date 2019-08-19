@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import './App.css';
 import UserBox from './UserBox.js';
+import RepoBox from './RepoBox.js';
 import { Container, Heading, Section, Content, Box, Media, Image } from 'react-bulma-components/full';
 
 class App extends Component {  
@@ -21,8 +22,8 @@ class App extends Component {
   async componentDidMount() {
     
     await axios.all([
-      axios.get('https://api.github.com/users/lekastillo'),
-      axios.get('https://api.github.com/users/lekastillo/repos')
+      axios.get('https://api.github.com/users/ctkrecords'),
+      axios.get('https://api.github.com/users/ctkrecords/repos')
       ]).then(responseArr => {
         console.log(responseArr[0].data);
         console.log(responseArr[1].data);
@@ -32,13 +33,11 @@ class App extends Component {
           isLoaded: true,
         }); 
       })
-      .catch(error => console.log(error))
-
-    
+      .catch(error => console.log(error))    
     }
   
   render() {
-    let { user=[], isLoaded } = this.state;
+    let { user=[], repos=[], isLoaded } = this.state;
     return (
       <div className="App">
         <Section>
@@ -58,7 +57,7 @@ class App extends Component {
         </Section>
         <Section>
           <Container fluid>
-            <p>hola xd</p>
+            {isLoaded && <RepoBox repos={repos} />}
           </Container>
         </Section>
       </div>
