@@ -1,26 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import axios from 'axios'
 import './App.css';
+import UserBox from './UserBox.js';
+import { Container, Heading, Section, Content, Box, Media, Image } from 'react-bulma-components/full';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {  
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: [],
+      repos: [],
+      isLoaded: false,
+    }
+  }
+
+  /*
+    axi
+  */
+
+  async componentDidMount() {
+    
+    await axios.all([
+      axios.get('https://api.github.com/users/lekastillo'),
+      axios.get('https://api.github.com/users/lekastillo/repos')
+      ]).then(responseArr => {
+        console.log(responseArr[0].data);
+        console.log(responseArr[1].data);
+        this.setState({
+          user: responseArr[0].data,
+          repos: responseArr[1].data,
+          isLoaded: true,
+        }); 
+      })
+      .catch(error => console.log(error))
+
+    
+    }
+  
+  render() {
+    let { user=[], isLoaded } = this.state;
+    return (
+      <div className="App">
+        <Section>
+          <Container fluid>
+              <Heading size={5} renderAs="p">
+                My Gits Profile
+              </Heading>
+              <Heading subtitle renderAs="p">
+                Using  with React and Axios
+              </Heading>
+          </Container>
+        </Section>
+        <Section>
+          <Container fluid>
+            {isLoaded && <UserBox user={user} />}
+          </Container>
+        </Section>
+        <Section>
+          <Container fluid>
+            <p>hola xd</p>
+          </Container>
+        </Section>
+      </div>
+    );
+  }
 }
+
 
 export default App;
