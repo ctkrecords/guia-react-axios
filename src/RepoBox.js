@@ -1,5 +1,5 @@
 import React from 'react';
-import {Content} from 'react-bulma-components/full';
+import {Content, Box} from 'react-bulma-components/full';
 
 const RepoBox = (props) => {
     if (props.repos === []){
@@ -9,7 +9,8 @@ const RepoBox = (props) => {
     }
 
     return ( 
-        <Content>
+        <Box>
+            <Content>
             <strong>Lista de repositorios: </strong>
             <p>
                 <ul>
@@ -23,6 +24,8 @@ const RepoBox = (props) => {
                 </ul>
             </p>
         </Content>
+        </Box> 
+        
     );
 }
 
