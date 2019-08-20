@@ -14,7 +14,11 @@ const RepoBox = (props) => {
             <p>
                 <ul>
                     {
-                    props.repos.map(repos => <p><li>{repos.name}</li></p>)
+                    props.repos.map(repos => 
+                    <p><li>
+                        <a href={repos.html_url}> {repos.name} </a> 
+                        <p>Descripción: {repos.description}</p>
+                        </li></p>)
                     }
                 </ul>
             </p>
